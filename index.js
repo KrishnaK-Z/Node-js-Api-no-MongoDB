@@ -50,7 +50,7 @@ app.post('/api/login', (request, response)=>{
     });
 });
 
-// Format of token
+// Format of token middleware
 // Autherozation : Bearer <access_token>
 function verifyToken(request, response, next){
     // get auth header value

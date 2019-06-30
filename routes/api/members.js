@@ -1,6 +1,7 @@
 const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
+const joi = require('joi');
 
 const companies = require('../../Companies');
 
@@ -29,6 +30,14 @@ router.get('/:id', (request, response)=>{
 
 // create a company
 router.post('/', (request, response) => {
+    const schema = {
+        name: joi.string().min(5).required(),
+        category: joi.string().min(3).required(),
+        start: joi.number(),
+        end: joi.number()
+    }
+    const result = joi.validate(request.body, schema);
+    response.json(result);
     const newCompany = {
         id: uuid.v4(),
         name: request.body.name,
@@ -41,8 +50,8 @@ router.post('/', (request, response) => {
         response.status(400).json({message: "Please Enter the name and category"});
     }
     companies.push(newCompany);
-    // response.send(newCompany);
-    response.redirect('/');
+    response.send(newCompany);
+    // response.redirect('/');
 });
 
 // update the company details
