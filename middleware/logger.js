@@ -1,8 +1,18 @@
 const moment = require('moment');
 
-const logger = (req, res, next)=>{
-    console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}: ${moment().format()}`);
-    next();    
+const logger = (request, response, next)=>{
+    const bearerHeader = request.headers['authorization'];
+        
+    if(typeof(bearerHeader)!=='undefined')
+    {
+        const token = bearerHeader.split(' ')[1];
+        request.token = token;
+        next();
+    }
+    else{
+        response.sendStatus(403);
+    }    
+        
 };
 
 module.exports = logger;
