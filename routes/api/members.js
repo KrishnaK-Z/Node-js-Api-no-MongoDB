@@ -37,9 +37,10 @@ router.post('/', (request, response) => {
         end: joi.number()
     }
     const result = joi.validate(request.body, schema);
-    if(result.error)
+    const { error } = joi.validate(request.body, schema); //error is a property in result
+    if(error)
     {
-        response.sendStatus(403).send(result.error.details[0].message);
+        response.sendStatus(403).send(error.details[0].message);
     }
     const newCompany = {
         id: uuid.v4(),

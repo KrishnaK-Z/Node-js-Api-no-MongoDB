@@ -2,22 +2,29 @@ const express = require('express');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const exphs = require('express-handlebars');
+const mongoose = require('mongoose');
+require('dotenv/config');
+const postsRoute = require('./routes/api/mongo/posts');
 const companies = require('./Companies');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
 
 const logger = require('./middleware/logger');
 
 const app = express();
-
+app.use(cors());
 // handlebars middleware
 app.engine('handlebars', exphs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false }));
+app.use('/mongo', postsRoute);
 // Init middleware
 // app.use(logger);
 
-app.post('/api/posts',logger, (request, response)=>{
+app.post('/api/posts', logger, (request, response)=>{
     jwt.verify(request.token, 'secret', (error, authData) => {
         if(error)
         {
@@ -49,6 +56,14 @@ app.post('/api/login', (request, response)=>{
         }
     });
 });
+
+
+
+// Connect to database
+mongoose.connect(
+    process.env.DB_CONNECTION,
+     { useNewUrlParser: true }).then(()=>console.log("Mongo db connected")
+).catch(error => console.log(error))
 
 // Format of token middleware
 // Autherozation : Bearer <access_token>
