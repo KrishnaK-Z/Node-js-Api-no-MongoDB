@@ -37,7 +37,10 @@ router.post('/', (request, response) => {
         end: joi.number()
     }
     const result = joi.validate(request.body, schema);
-    response.json(result);
+    if(result.error)
+    {
+        response.sendStatus(403).send(result.error.details[0].message);
+    }
     const newCompany = {
         id: uuid.v4(),
         name: request.body.name,
