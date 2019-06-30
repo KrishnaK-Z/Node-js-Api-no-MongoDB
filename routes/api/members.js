@@ -41,7 +41,8 @@ router.post('/', (request, response) => {
         response.status(400).json({message: "Please Enter the name and category"});
     }
     companies.push(newCompany);
-    response.send(newCompany);
+    // response.send(newCompany);
+    response.redirect('/');
 });
 
 // update the company details
