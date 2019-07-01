@@ -19,6 +19,16 @@
     "moment": "^2.24.0",
     "mongodb": "^3.2.7",
     "mongoose": "^5.6.2",
+    "nodemon": "^1.19.1",
     "uuid": "^3.3.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krishnaMsec/Node-js-Api-no-MongoDB.git"
+  },
+  "bugs": {
+    "url": "https://github.com/krishnaMsec/Node-js-Api-no-MongoDB/issues"
+  },
+  "homepage": "https://github.com/krishnaMsec/Node-js-Api-no-MongoDB#readme"
 }
